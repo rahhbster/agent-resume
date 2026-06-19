@@ -1,0 +1,281 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://agent-resume.dev/schemas/ccdm/v1.0.0/schema.json",
+  "title": "Candidate Canonical Data Model (CCDM)",
+  "description": "Standardized schema for representing candidate data for AI-powered job matching",
+  "type": "object",
+  "required": ["schema_version", "candidate_id", "full_name", "contact"],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": { "type": "string", "const": "1.0.0" },
+    "candidate_id": { "type": "string", "format": "uuid" },
+    "full_name": { "type": "string", "minLength": 1 },
+    "preferred_name": { "type": "string" },
+    "headline": { "type": "string" },
+    "current_title": { "type": "string" },
+    "contact": {
+      "type": "object",
+      "required": ["email"],
+      "additionalProperties": false,
+      "properties": {
+        "email": { "type": "string", "format": "email" },
+        "phone": { "type": "string" },
+        "linkedin_url": { "type": "string", "format": "uri" },
+        "github_url": { "type": "string", "format": "uri" },
+        "portfolio_url": { "type": "string", "format": "uri" }
+      }
+    },
+    "location": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "city": { "type": "string" },
+        "state": { "type": "string" },
+        "country": { "type": "string" }
+      }
+    },
+    "work_preferences": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "remote": { "type": "boolean" },
+        "hybrid": { "type": "boolean" },
+        "onsite": { "type": "boolean" },
+        "relocation": { "type": "boolean" },
+        "travel_percentage": { "type": "integer", "minimum": 0, "maximum": 100 }
+      }
+    },
+    "work_authorization": {
+      "type": "object",
+      "required": ["country", "authorized"],
+      "additionalProperties": false,
+      "properties": {
+        "country": { "type": "string" },
+        "authorized": { "type": "boolean" },
+        "requires_sponsorship": { "type": "boolean" },
+        "security_clearance": {
+          "type": ["string", "null"],
+          "enum": ["None", "Public Trust", "Secret", "Top Secret", "TS/SCI", null]
+        }
+      }
+    },
+    "job_search_status": {
+      "type": "string",
+      "enum": ["actively_looking", "passively_open", "not_looking", "unknown"]
+    },
+    "salary_expectations": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "currency": { "type": "string", "default": "USD" },
+        "minimum": { "type": ["integer", "null"] },
+        "maximum": { "type": ["integer", "null"] },
+        "period": { "type": "string", "enum": ["Annual", "Monthly", "Hourly"] }
+      }
+    },
+    "availability_date": { "type": ["string", "null"], "format": "date" },
+    "professional_summary": { "type": "string" },
+    "experience": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["company", "title", "start_date"],
+        "additionalProperties": false,
+        "properties": {
+          "company": { "type": "string" },
+          "title": { "type": "string" },
+          "start_date": { "type": "string", "pattern": "^\\d{4}-\\d{2}$" },
+          "end_date": { "type": ["string", "null"], "pattern": "^\\d{4}-\\d{2}$" },
+          "current": { "type": "boolean" },
+          "location": { "type": "string" },
+          "description": { "type": "string" },
+          "achievements": { "type": "array", "items": { "type": "string" } }
+        }
+      }
+    },
+    "experience_enrichment": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "years_experience_total": { "type": "number" },
+        "years_management": { "type": "number" },
+        "skills_years": {
+          "type": "object",
+          "additionalProperties": { "type": "number" }
+        }
+      }
+    },
+    "skills": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["skill"],
+        "additionalProperties": false,
+        "properties": {
+          "skill": { "type": "string" },
+          "normalized_skill": { "type": "string" },
+          "proficiency": {
+            "type": "string",
+            "enum": ["Beginner", "Intermediate", "Advanced", "Expert"]
+          },
+          "years_experience": { "type": "number" }
+        }
+      }
+    },
+    "education": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["institution"],
+        "additionalProperties": false,
+        "properties": {
+          "degree": { "type": "string" },
+          "field": { "type": "string" },
+          "institution": { "type": "string" },
+          "graduation_year": { "type": ["integer", "null"] },
+          "gpa": { "type": ["number", "null"] }
+        }
+      }
+    },
+    "certifications": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name"],
+        "additionalProperties": false,
+        "properties": {
+          "name": { "type": "string" },
+          "issuer": { "type": "string" },
+          "year": { "type": ["integer", "null"] },
+          "url": { "type": "string", "format": "uri" }
+        }
+      }
+    },
+    "projects": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name"],
+        "additionalProperties": false,
+        "properties": {
+          "name": { "type": "string" },
+          "description": { "type": "string" },
+          "technologies": { "type": "array", "items": { "type": "string" } },
+          "url": { "type": "string", "format": "uri" }
+        }
+      }
+    },
+    "publications": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["title"],
+        "additionalProperties": false,
+        "properties": {
+          "title": { "type": "string" },
+          "publisher": { "type": "string" },
+          "url": { "type": "string", "format": "uri" },
+          "date": { "type": "string", "format": "date" }
+        }
+      }
+    },
+    "languages": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "fluency"],
+        "additionalProperties": false,
+        "properties": {
+          "name": { "type": "string" },
+          "fluency": { "type": "string", "enum": ["Native", "Fluent", "Professional", "Basic"] }
+        }
+      }
+    },
+    "volunteer": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["organization", "role"],
+        "additionalProperties": false,
+        "properties": {
+          "organization": { "type": "string" },
+          "role": { "type": "string" },
+          "start_date": { "type": "string" },
+          "end_date": { "type": ["string", "null"] },
+          "description": { "type": "string" }
+        }
+      }
+    },
+    "awards": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["title"],
+        "additionalProperties": false,
+        "properties": {
+          "title": { "type": "string" },
+          "date": { "type": "string" },
+          "awarder": { "type": "string" },
+          "description": { "type": "string" }
+        }
+      }
+    },
+    "social_profiles": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "linkedin": { "type": "string", "format": "uri" },
+        "github": { "type": "string", "format": "uri" },
+        "stackoverflow": { "type": "string", "format": "uri" },
+        "behance": { "type": "string", "format": "uri" },
+        "dribbble": { "type": "string", "format": "uri" },
+        "medium": { "type": "string", "format": "uri" }
+      }
+    },
+    "tags": { "type": "array", "items": { "type": "string" } },
+    "candidate_summaries": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "recruiter_summary": { "type": "string" },
+        "executive_summary": { "type": "string" },
+        "linkedin_bio": { "type": "string" },
+        "email_intro": { "type": "string" },
+        "sms_intro": { "type": "string", "maxLength": 160 }
+      }
+    },
+    "matching_metadata": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "seniority": {
+          "type": "string",
+          "enum": ["Entry-Level", "Junior", "Mid-Level", "Senior", "Lead", "Director", "VP", "C-Level"]
+        },
+        "job_functions": { "type": "array", "items": { "type": "string" } },
+        "industries": { "type": "array", "items": { "type": "string" } },
+        "management_level": {
+          "type": "string",
+          "enum": ["Individual Contributor", "Manager", "Director", "VP", "C-Level"]
+        },
+        "leadership_experience": { "type": "boolean" }
+      }
+    },
+    "competencies": { "type": "array", "items": { "type": "string" } },
+    "career_progression": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "trajectory": {
+          "type": "string",
+          "enum": ["Accelerating", "Steady", "Lateral", "Declining", "Unknown"]
+        },
+        "promotions": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "semantic_keywords": { "type": "array", "items": { "type": "string" } },
+    "embedding_vector": { "type": "array", "items": { "type": "number" } },
+    "created_at": { "type": "string", "format": "date-time" },
+    "updated_at": { "type": "string", "format": "date-time" }
+  }
+}
