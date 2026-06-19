@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>agent-resume — the open schema standard for AI-native hiring</title>
+  <meta name="description" content="One canonical shape for candidates, jobs, matches, and sync — so every résumé parser, ATS, job board, and LLM agent can finally speak the same language." />
+  <meta property="og:title" content="agent-resume" />
+  <meta property="og:description" content="The open schema standard for AI-native hiring." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://agent-resume.dev" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%236366f1'/%3E%3Cpath d='M20 44V20h8.5c5 0 8 2.7 8 7 0 3-1.4 5.2-4 6.3L44 44h-6.6l-6.4-9.6H26V44zM26 30h2.2c2.4 0 3.8-1.1 3.8-3.2S30.6 23.6 28.2 23.6H26z' fill='white'/%3E%3C/svg%3E" />
+  <link rel="stylesheet" href="/assets/site.css" />
+</head>
+<body>
+  <header class="nav">
+    <div class="nav-inner">
+      <a class="brand" href="/">
+        <span class="brand-mark">{ }</span>
+        <span class="brand-name">agent-resume</span>
+      </a>
+      <nav class="nav-links">
+        <a href="#schemas">Schemas</a>
+        <a href="/spec/">Spec</a>
+        <a href="/docs/">Docs</a>
+        <a href="#jsonresume">vs. JSON Resume</a>
+        <a class="nav-cta" href="https://github.com/rahhbster/agent-resume">GitHub ↗</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-glow" aria-hidden="true"></div>
+      <div class="hero-inner">
+        <span class="eyebrow">JSON Schema · draft-07 · v1.0.0</span>
+        <h1>The open schema standard<br />for <span class="grad">AI-native hiring</span>.</h1>
+        <p class="lede">
+          One canonical shape for <strong>candidates</strong>, <strong>jobs</strong>,
+          <strong>matches</strong>, and <strong>sync</strong> — so every résumé parser, ATS,
+          job board, and LLM agent can finally speak the same language.
+        </p>
+        <div class="cta-row">
+          <a class="btn btn-primary" href="#quick-start">Get started</a>
+          <a class="btn btn-ghost" href="/spec/">Read the spec</a>
+          <a class="btn btn-ghost" href="https://www.npmjs.com/package/@agent-resume/schemas">npm ↗</a>
+        </div>
+        <div class="install">
+          <code>npm install @agent-resume/schemas</code>
+          <button class="copy" data-copy="npm install @agent-resume/schemas" aria-label="Copy install command">Copy</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="problem">
+      <div class="wrap narrow">
+        <h2>Hiring data is a tower of Babel</h2>
+        <p>
+          A résumé leaves a parser as one shape, lands in an ATS as another, gets re-shaped for a
+          job board, and is flattened again before it ever reaches a model. Every integration is a
+          bespoke mapping, every matching engine reinvents "what is a skill," and every LLM agent is
+          handed a slightly different blob of JSON.
+        </p>
+        <p>
+          There's a good standard for the <em>human</em> résumé —
+          <a href="https://jsonresume.org">JSON Resume</a> — but nothing canonical for the parts
+          machines now care about: <strong>normalized skills, requirement levels, knock-out logic,
+          match scores, model evaluations, and the events that keep two systems in sync.</strong>
+          <code>agent-resume</code> is that missing layer.
+        </p>
+      </div>
+    </section>
+
+    <section id="schemas" class="schemas">
+      <div class="wrap">
+        <h2 class="section-title">Four canonical schemas</h2>
+        <p class="section-sub">Strict draft-07 JSON Schema, <code>additionalProperties: false</code>, semver-versioned <code>$id</code>s — with mirror TypeScript types and Ajv validators.</p>
+        <div class="card-grid">
+          <article class="card">
+            <div class="card-tag">CCDM</div>
+            <h3>Candidate Canonical Data Model</h3>
+            <p>A structured candidate profile: experience, normalized skills with proficiency, education, work authorization, preferences, and AI enrichment — embeddings, seniority, generated summaries.</p>
+            <a class="card-link" href="/schemas/ccdm/v1.0.0/schema.json">schema.json →</a>
+          </article>
+          <article class="card">
+            <div class="card-tag">JD-CDM</div>
+            <h3>Job Description Canonical Data Model</h3>
+            <p>A structured posting: company, comp, responsibilities, and <strong>requirements tagged by level</strong> — Knock-Out / Required / Preferred / Optional.</p>
+            <a class="card-link" href="/schemas/jdcdm/v1.0.0/schema.json">schema.json →</a>
+          </article>
+          <article class="card">
+            <div class="card-tag">MatchObject</div>
+            <h3>Candidate ↔ Job match</h3>
+            <p>A deterministic <strong>algorithmic score</strong> (always present) plus an <strong>optional LLM evaluation</strong> — recommendation, rationale, and requirement-by-requirement analysis.</p>
+            <a class="card-link" href="/schemas/match-object/v1.0.0/schema.json">schema.json →</a>
+          </article>
+          <article class="card">
+            <div class="card-tag">SyncEvent</div>
+            <h3>Signed sync envelope</h3>
+            <p>An HMAC-authenticated webhook envelope for cross-system sync, covering <strong>18 event types</strong> across candidates, jobs, applications, matches, evaluations, and scrapes.</p>
+            <a class="card-link" href="/schemas/sync-event/v1.0.0/schema.json">schema.json →</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="levels">
+      <div class="wrap narrow">
+        <h2 class="section-title">Requirement levels: matching that reasons</h2>
+        <p class="section-sub">JD-CDM tags every requirement with one of four levels. This is what lets a matcher reason instead of keyword-count.</p>
+        <table class="data-table">
+          <thead>
+            <tr><th>Level</th><th>Meaning</th><th>Effect on matching</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><span class="pill pill-ko">Knock-Out</span></td><td>Hard gate (work authorization, an active clearance).</td><td>Failing one sets <code>knock_out_passed: false</code> — the candidate does not advance, regardless of score.</td></tr>
+            <tr><td><span class="pill pill-req">Required</span></td><td>Must-have to be competitive.</td><td>Heavily weighted; gaps surface as <code>critical</code>.</td></tr>
+            <tr><td><span class="pill pill-pref">Preferred</span></td><td>Strong plus.</td><td>Moderately weighted; raises the ceiling.</td></tr>
+            <tr><td><span class="pill pill-opt">Optional</span></td><td>Nice to have.</td><td>Lightly weighted; tie-breaker only.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="quick-start" class="quickstart">
+      <div class="wrap narrow">
+        <h2 class="section-title">Quick start</h2>
+        <p class="section-sub">Validate, convert, and sign — in a few lines.</p>
+        <pre class="code"><code><span class="k">import</span> {
+  validateCCDM,
+  ccdmToJsonResume,
+  signPayload,
+  verifyPayload,
+  <span class="k">type</span> CCDM,
+} <span class="k">from</span> <span class="s">"@agent-resume/schemas"</span>;
+
+<span class="c">// 1. Validate a parsed candidate against the canonical model.</span>
+<span class="k">const</span> candidate = validateCCDM(parsedResume) <span class="k">as</span> CCDM;
+
+<span class="c">// 2. Export it to JSON Resume for any downstream renderer.</span>
+<span class="k">const</span> resume = ccdmToJsonResume(candidate);
+
+<span class="c">// 3. Ship a sync event with a tamper-proof signature.</span>
+<span class="k">const</span> { header } = signPayload(body, process.env.WEBHOOK_SECRET);
+<span class="c">// ...and verify on the receiving end:</span>
+<span class="k">const</span> ok = verifyPayload(rawBody, signatureHeader, secret);</code></pre>
+      </div>
+    </section>
+
+    <section id="jsonresume" class="compare">
+      <div class="wrap narrow">
+        <h2 class="section-title">Complementary to JSON Resume — not a competitor</h2>
+        <p class="section-sub">JSON Resume is the standard for the human-facing résumé. CCDM is a <strong>superset</strong> built for machines and the rest of the pipeline. Adopting it is additive, and <code>ccdmToJsonResume()</code> exports back anytime.</p>
+        <table class="data-table">
+          <thead>
+            <tr><th></th><th>JSON Resume</th><th>agent-resume (CCDM)</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Primary audience</td><td>Humans rendering a résumé</td><td>Parsers, ATS, matchers, LLM agents</td></tr>
+            <tr><td>Scope</td><td>The résumé document</td><td>Candidate <strong>+ job + match + sync</strong></td></tr>
+            <tr><td>Skills</td><td>Free-text name + keywords</td><td>Normalized skill, proficiency, years</td></tr>
+            <tr><td>Requirement levels</td><td>—</td><td>Knock-Out / Required / Preferred / Optional</td></tr>
+            <tr><td>Matching &amp; evaluation</td><td>—</td><td>First-class <code>MatchObject</code></td></tr>
+            <tr><td>AI enrichment</td><td>—</td><td>Embeddings, seniority, semantic keywords</td></tr>
+            <tr><td>Interop</td><td>—</td><td><code>ccdmToJsonResume()</code></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="final-cta">
+      <div class="wrap narrow">
+        <h2>Build on the standard.</h2>
+        <p>It's a community standard — proposals, adapters, and new language bindings are all welcome.</p>
+        <div class="cta-row">
+          <a class="btn btn-primary" href="https://github.com/rahhbster/agent-resume">Star on GitHub ↗</a>
+          <a class="btn btn-ghost" href="/docs/">Read the docs</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap footer-inner">
+      <span>MIT © agent-resume contributors</span>
+      <nav>
+        <a href="/spec/">Spec</a>
+        <a href="/docs/">Docs</a>
+        <a href="https://github.com/rahhbster/agent-resume">GitHub</a>
+        <a href="https://www.npmjs.com/package/@agent-resume/schemas">npm</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script>
+    document.querySelectorAll(".copy").forEach((b) => {
+      b.addEventListener("click", async () => {
+        await navigator.clipboard.writeText(b.dataset.copy);
+        const t = b.textContent; b.textContent = "Copied"; setTimeout(() => (b.textContent = t), 1200);
+      });
+    });
+  </script>
+</body>
+</html>
