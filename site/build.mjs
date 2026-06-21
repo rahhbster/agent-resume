@@ -48,9 +48,12 @@ function rewriteLinks(markdown) {
     .replace(/\]\(\.\/SPEC\.md([^)]*)\)/g, "](/spec/$1)")
     .replace(/\]\(SPEC\.md([^)]*)\)/g, "](/spec/$1)")
     .replace(/\]\(\.\/README\.md([^)]*)\)/g, "](/docs/$1)")
+    .replace(/\]\(\.\/CONTRIBUTORS\.md([^)]*)\)/g, "](/contributors/$1)")
     .replace(/\]\(\.\/CONTRIBUTING\.md\)/g, `](${repo}/CONTRIBUTING.md)`)
     .replace(/\]\(\.\/LICENSE\)/g, `](${repo}/LICENSE)`)
-    .replace(/\]\(\.\/examples([^)]*)\)/g, `](${repo}/examples$1)`);
+    .replace(/\]\(\.\/examples([^)]*)\)/g, `](${repo}/examples$1)`)
+    .replace(/\]\(\.\/packages([^)]*)\)/g, `](${repo}/packages$1)`)
+    .replace(/\]\(packages([^)]*)\)/g, `](${repo}/packages$1)`);
 }
 
 function page(title, bodyHtml, { back } = {}) {
@@ -60,7 +63,7 @@ function page(title, bodyHtml, { back } = {}) {
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>${title} · agent-resume</title>
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%236366f1'/%3E%3C/svg%3E" />
+  <link rel="icon" type="image/svg+xml" href="/assets/logo.svg" />
   <link rel="stylesheet" href="/assets/site.css" />
   <link rel="stylesheet" href="/assets/docs.css" />
 </head>
@@ -78,7 +81,7 @@ function page(title, bodyHtml, { back } = {}) {
   </main>
   <footer class="footer"><div class="wrap footer-inner">
     <span>MIT © agent-resume contributors</span>
-    <nav><a href="/spec/">Spec</a><a href="/docs/">Docs</a><a href="https://github.com/rahhbster/agent-resume">GitHub</a></nav>
+    <nav><a href="/spec/">Spec</a><a href="/docs/">Docs</a><a href="/contributors/">Contributors</a><a href="https://github.com/rahhbster/agent-resume">GitHub</a></nav>
   </div></footer>
 </body>
 </html>`;
@@ -113,15 +116,24 @@ async function main() {
   );
 
   // 3. Rendered docs
-  const readme = rewriteLinks(await fs.readFile(path.join(root, "README.md"), "utf8"));
-  const spec = rewriteLinks(await fs.readFile(path.join(root, "SPEC.md"), "utf8"));
+  // Strip the GitHub-only header block (<div align="center">…</div> + hr) before rendering —
+  // markdown-it treats HTML blocks as opaque, so the badges and nav links inside the div would
+  // appear as raw text in the browser.
+  const stripCenterHeader = (s) =>
+    s.replace(/^<div align="center">[\s\S]*?<\/div>\s*\n---\n/m, "").trimStart();
+  const readFile = (rel) => fs.readFile(path.join(root, rel), "utf8");
+
+  const readme = rewriteLinks(stripCenterHeader(await readFile("README.md")));
+  const spec = rewriteLinks(await readFile("SPEC.md"));
+  const contributors = rewriteLinks(stripCenterHeader(await readFile("CONTRIBUTORS.md")));
   await writeFile("docs/index.html", page("Docs", md.render(readme), { back: "/" }));
   await writeFile("spec/index.html", page("Specification", md.render(spec), { back: "/" }));
+  await writeFile("contributors/index.html", page("Contributors", md.render(contributors), { back: "/" }));
 
   // 4. Custom domain + crawler niceties
   await writeFile("CNAME", `${DOMAIN}\n`);
   await writeFile("robots.txt", `User-agent: *\nAllow: /\nSitemap: https://${DOMAIN}/sitemap.xml\n`);
-  const urls = ["", "spec/", "docs/", "schemas/", ...served.map((s) => s.rel)];
+  const urls = ["", "spec/", "docs/", "contributors/", "schemas/", ...served.map((s) => s.rel)];
   await writeFile(
     "sitemap.xml",
     `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls
@@ -130,7 +142,7 @@ async function main() {
   );
 
   console.log(`Built site → ${out}`);
-  console.log(`Served ${served.length} schemas, 2 doc pages, landing + schema index.`);
+  console.log(`Served ${served.length} schemas, 3 doc pages, landing + schema index.`);
 }
 
 main().catch((err) => {

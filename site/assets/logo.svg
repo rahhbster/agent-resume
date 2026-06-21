@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="agent-resume">
+  <defs>
+    <linearGradient id="ar-g" x1="0" y1="0" x2="64" y2="64" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#6366f1"/>
+      <stop offset=".5" stop-color="#a855f7"/>
+      <stop offset="1" stop-color="#22d3ee"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="15" fill="url(#ar-g)"/>
+  <g fill="none" stroke="#fff" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M30 14c-6 0-6 4-6 9 0 5-1 7-5 9 4 2 5 4 5 9 0 5 0 9 6 9"/>
+    <path d="M34 14c6 0 6 4 6 9 0 5 1 7 5 9-4 2-5 4-5 9 0 5 0 9-6 9"/>
+  </g>
+</svg>
