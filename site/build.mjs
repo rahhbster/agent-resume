@@ -50,7 +50,9 @@ function rewriteLinks(markdown) {
     .replace(/\]\(\.\/README\.md([^)]*)\)/g, "](/docs/$1)")
     .replace(/\]\(\.\/CONTRIBUTING\.md\)/g, `](${repo}/CONTRIBUTING.md)`)
     .replace(/\]\(\.\/LICENSE\)/g, `](${repo}/LICENSE)`)
-    .replace(/\]\(\.\/examples([^)]*)\)/g, `](${repo}/examples$1)`);
+    .replace(/\]\(\.\/examples([^)]*)\)/g, `](${repo}/examples$1)`)
+    .replace(/\]\(\.\/packages([^)]*)\)/g, `](${repo}/packages$1)`)
+    .replace(/\]\(packages([^)]*)\)/g, `](${repo}/packages$1)`);
 }
 
 function page(title, bodyHtml, { back } = {}) {
@@ -113,7 +115,14 @@ async function main() {
   );
 
   // 3. Rendered docs
-  const readme = rewriteLinks(await fs.readFile(path.join(root, "README.md"), "utf8"));
+  // Strip the GitHub-only header block (<div align="center">…</div> + hr) from the README
+  // before rendering — markdown-it treats HTML blocks as opaque, so the badges and nav links
+  // inside the div would appear as raw text in the browser.
+  const rawReadme = await fs.readFile(path.join(root, "README.md"), "utf8");
+  const strippedReadme = rawReadme
+    .replace(/^<div align="center">[\s\S]*?<\/div>\s*\n---\n/m, "")
+    .trimStart();
+  const readme = rewriteLinks(strippedReadme);
   const spec = rewriteLinks(await fs.readFile(path.join(root, "SPEC.md"), "utf8"));
   await writeFile("docs/index.html", page("Docs", md.render(readme), { back: "/" }));
   await writeFile("spec/index.html", page("Specification", md.render(spec), { back: "/" }));
