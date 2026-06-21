@@ -58,6 +58,12 @@ When you change a schema you **must**:
 
 Be kind and constructive. We follow the [Contributor Covenant](https://www.contributor-covenant.org/version/2/1/code_of_conduct/).
 
+## Credit
+
+Significant contributors are listed in [CONTRIBUTORS.md](./CONTRIBUTORS.md). Once
+your first meaningful PR is merged you'll be added — or add yourself in the same
+PR (see [How to get listed](./CONTRIBUTORS.md#how-to-get-listed)).
+
 ## License
 
 By contributing, you agree your contributions are licensed under the [MIT License](./LICENSE).

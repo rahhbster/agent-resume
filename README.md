@@ -1,5 +1,7 @@
 <div align="center">
 
+<img src="./site/assets/logo.svg" alt="agent-resume" width="96" height="96" />
+
 # agent-resume
 
 ### The open schema standard for AI-native hiring.
@@ -191,6 +193,8 @@ pnpm typecheck    # tsc --noEmit (strict, exactOptionalPropertyTypes)
 ## 🤝 Contributing
 
 This is meant to be a community standard — proposals, new adapters, and additional language bindings are all welcome. Schema changes follow a strict versioning policy (see [SPEC.md → Versioning](./SPEC.md#2-versioning-policy)). Start with **[CONTRIBUTING.md](./CONTRIBUTING.md)**.
+
+The people who build the standard are credited in **[CONTRIBUTORS.md](./CONTRIBUTORS.md)** — significant contributors are added as their work is merged.
 
 ## 📄 License
 
