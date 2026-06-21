@@ -1,0 +1,58 @@
+{
+  "schema_version": "1.0.0",
+  "match_id": "323e4567-e89b-12d3-a456-426614174002",
+  "job_id": "223e4567-e89b-12d3-a456-426614174001",
+  "candidate_id": "123e4567-e89b-12d3-a456-426614174000",
+  "overall_score": 0.86,
+  "knock_out_passed": true,
+  "sub_scores": {
+    "skills": 0.9,
+    "experience": 0.85,
+    "education": 0.8,
+    "location": 1.0,
+    "compensation": 0.9,
+    "seniority": 0.7
+  },
+  "knock_out_results": [
+    { "requirement": "Authorized to work in the US without sponsorship", "passed": true }
+  ],
+  "gaps": [
+    { "field": "skill", "name": "dbt", "level": "Required", "candidate_has": true, "severity": "minor", "note": "4 yrs vs 2 required — exceeds" }
+  ],
+  "strengths": [
+    { "field": "skill", "note": "SQL expertise (9 yrs) far exceeds the requirement" },
+    { "field": "location", "note": "Local to Austin; hybrid-ready" }
+  ],
+  "scored_at": "2026-06-15T12:00:00Z",
+  "scorer_version": "1.0.0",
+  "evaluated_at": "2026-06-15T12:05:00Z",
+  "evaluator_model": "claude-sonnet-4-5",
+  "candidateInfo": {
+    "name": "Jane Smith",
+    "current_title": "Senior Data Analyst",
+    "years_of_experience": 9,
+    "top_skills": ["SQL", "Python", "dbt"],
+    "location": "Austin, TX",
+    "seniority": "Senior"
+  },
+  "positionDetails": {
+    "title": "Senior Analytics Engineer",
+    "company": "Acme Corp",
+    "remote_option": "Hybrid",
+    "experience_level": "Senior",
+    "key_requirements": ["SQL", "dbt", "experimentation"]
+  },
+  "assessment": {
+    "overallAlignment": { "score": 8, "recommendation": "Yes", "rationale": "Strong analytics + SQL/dbt depth; pure IC, no management asked." },
+    "careerAlignment": { "score": 8, "summary": "Steady senior IC trajectory matches the role.", "trajectory_match": true },
+    "skillMatch": { "score": 9, "summary": "Meets or exceeds every required skill.", "critical_skills_met": ["SQL", "dbt"], "critical_skills_missing": [] },
+    "will": { "score": 7, "summary": "Passively open; comp aligns, so engageable." },
+    "fit": { "score": 8, "summary": "Local, hybrid-ready, SaaS background." }
+  },
+  "recommendation": {
+    "summary": "Strong fit — fast-track to a screen.",
+    "nextSteps": ["Recruiter screen", "Take-home or live SQL/dbt exercise"],
+    "suggested_outreach": "Lead with the experimentation charter and hybrid Austin setup."
+  },
+  "finalSummary": "High-confidence match; no knock-outs, requirements met, comp aligned."
+}

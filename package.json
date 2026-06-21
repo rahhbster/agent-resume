@@ -1,0 +1,28 @@
+{
+  "name": "agent-resume",
+  "private": true,
+  "version": "0.0.0",
+  "description": "An open, AI-native schema standard for hiring pipelines.",
+  "homepage": "https://agent-resume.dev",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rahhbster/agent-resume.git"
+  },
+  "license": "MIT",
+  "scripts": {
+    "build": "turbo build",
+    "test": "turbo test",
+    "lint": "turbo lint",
+    "typecheck": "turbo typecheck",
+    "clean": "turbo clean"
+  },
+  "devDependencies": {
+    "turbo": "^2.0.0",
+    "typescript": "^5.4.0"
+  },
+  "engines": {
+    "node": ">=22",
+    "pnpm": ">=9"
+  },
+  "packageManager": "pnpm@9.12.0"
+}

@@ -1,0 +1,231 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://agent-resume.dev/schemas/match-object/v1.0.0/schema.json",
+  "title": "Match Object",
+  "description": "Unified match and AI evaluation result for a candidate-job pair. Algorithmic scorer fields (sub_scores, knock_out_results) are always present; LLM evaluation fields (assessment, recommendation, requirementsAnalysis) are populated by recruiter-claw and null until evaluated.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "match_id",
+    "job_id",
+    "candidate_id",
+    "overall_score",
+    "knock_out_passed",
+    "sub_scores",
+    "knock_out_results",
+    "gaps",
+    "strengths",
+    "scored_at"
+  ],
+  "properties": {
+    "schema_version": { "type": "string", "const": "1.0.0" },
+    "match_id": { "type": "string", "format": "uuid" },
+    "job_id": { "type": "string", "format": "uuid" },
+    "candidate_id": { "type": "string", "format": "uuid" },
+    "overall_score": {
+      "type": "number",
+      "minimum": 0.0,
+      "maximum": 1.0,
+      "description": "Weighted composite score from the algorithmic scorer (0.0-1.0)"
+    },
+    "knock_out_passed": {
+      "type": "boolean",
+      "description": "False means the candidate fails at least one knock-out criterion and should not advance regardless of overall_score"
+    },
+    "sub_scores": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["skills", "experience", "education", "location", "compensation", "seniority"],
+      "properties": {
+        "skills":       { "type": "number", "minimum": 0.0, "maximum": 1.0 },
+        "experience":   { "type": "number", "minimum": 0.0, "maximum": 1.0 },
+        "education":    { "type": "number", "minimum": 0.0, "maximum": 1.0 },
+        "location":     { "type": "number", "minimum": 0.0, "maximum": 1.0 },
+        "compensation": { "type": "number", "minimum": 0.0, "maximum": 1.0 },
+        "seniority":    { "type": "number", "minimum": 0.0, "maximum": 1.0 }
+      }
+    },
+    "knock_out_results": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["requirement", "passed"],
+        "properties": {
+          "requirement": { "type": "string" },
+          "passed": { "type": "boolean" },
+          "reason": { "type": "string" }
+        }
+      }
+    },
+    "gaps": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["field"],
+        "properties": {
+          "field": {
+            "type": "string",
+            "enum": ["skill", "experience", "education", "compensation", "location", "certification", "seniority", "other"]
+          },
+          "name": { "type": "string" },
+          "level": { "type": "string", "enum": ["Knock-Out", "Required", "Preferred", "Optional"] },
+          "candidate_has": { "type": "boolean" },
+          "job_max": { "type": ["number", "null"] },
+          "candidate_expects": { "type": ["number", "null"] },
+          "severity": { "type": "string", "enum": ["critical", "moderate", "minor"] },
+          "note": { "type": "string" }
+        }
+      }
+    },
+    "strengths": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["field", "note"],
+        "properties": {
+          "field": {
+            "type": "string",
+            "enum": ["skill", "experience", "education", "compensation", "location", "certification", "seniority", "culture", "leadership", "other"]
+          },
+          "note": { "type": "string" }
+        }
+      }
+    },
+    "scored_at": { "type": "string", "format": "date-time" },
+    "evaluated_at": { "type": ["string", "null"], "format": "date-time" },
+    "scorer_version": { "type": "string" },
+    "evaluator_model": { "type": "string" },
+    "candidateInfo": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "name": { "type": "string" },
+        "current_title": { "type": "string" },
+        "years_of_experience": { "type": "number" },
+        "top_skills": { "type": "array", "items": { "type": "string" }, "maxItems": 10 },
+        "location": { "type": "string" },
+        "seniority": { "type": "string" }
+      }
+    },
+    "positionDetails": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "title": { "type": "string" },
+        "company": { "type": "string" },
+        "remote_option": { "type": "string" },
+        "experience_level": { "type": "string" },
+        "key_requirements": { "type": "array", "items": { "type": "string" }, "maxItems": 10 }
+      }
+    },
+    "keyStrengths": { "type": "array", "items": { "type": "string" } },
+    "notableEmployers": { "type": "array", "items": { "type": "string" } },
+    "assessment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["overallAlignment", "careerAlignment", "skillMatch", "will", "fit"],
+      "properties": {
+        "overallAlignment": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["score", "recommendation"],
+          "properties": {
+            "score": { "type": "integer", "minimum": 1, "maximum": 10 },
+            "recommendation": {
+              "type": "string",
+              "enum": ["Strong Yes", "Yes", "Maybe", "No", "Strong No"]
+            },
+            "rationale": { "type": "string" }
+          }
+        },
+        "careerAlignment": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["score", "summary"],
+          "properties": {
+            "score": { "type": "integer", "minimum": 1, "maximum": 10 },
+            "summary": { "type": "string" },
+            "trajectory_match": { "type": "boolean" }
+          }
+        },
+        "skillMatch": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["score", "summary"],
+          "properties": {
+            "score": { "type": "integer", "minimum": 1, "maximum": 10 },
+            "summary": { "type": "string" },
+            "critical_skills_met": { "type": "array", "items": { "type": "string" } },
+            "critical_skills_missing": { "type": "array", "items": { "type": "string" } }
+          }
+        },
+        "will": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["score", "summary"],
+          "properties": {
+            "score": { "type": "integer", "minimum": 1, "maximum": 10 },
+            "summary": { "type": "string" }
+          }
+        },
+        "fit": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["score", "summary"],
+          "properties": {
+            "score": { "type": "integer", "minimum": 1, "maximum": 10 },
+            "summary": { "type": "string" }
+          }
+        }
+      }
+    },
+    "recommendation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["summary", "nextSteps"],
+      "properties": {
+        "summary": { "type": "string" },
+        "nextSteps": { "type": "array", "items": { "type": "string" } },
+        "suggested_outreach": { "type": "string" }
+      }
+    },
+    "requirementsAnalysis": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["knockoutCriteria", "requiredCriteria", "preferredCriteria", "optionalCriteria"],
+      "properties": {
+        "knockoutCriteria": { "type": "array", "items": { "$ref": "#/definitions/CriterionResult" } },
+        "requiredCriteria": { "type": "array", "items": { "$ref": "#/definitions/CriterionResult" } },
+        "preferredCriteria": { "type": "array", "items": { "$ref": "#/definitions/CriterionResult" } },
+        "optionalCriteria": { "type": "array", "items": { "$ref": "#/definitions/CriterionResult" } }
+      }
+    },
+    "strengthAreas": { "type": "array", "items": { "type": "string" } },
+    "gapAreas": { "type": "array", "items": { "type": "string" } },
+    "finalSummary": { "type": "string" }
+  },
+  "definitions": {
+    "CriterionResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["criterion", "met"],
+      "properties": {
+        "criterion": { "type": "string" },
+        "requirement_type": {
+          "type": "string",
+          "enum": ["Skill", "Education", "Certification", "Experience", "Other"]
+        },
+        "met": {
+          "type": "string",
+          "enum": ["fully", "partially", "not_met", "unknown"]
+        },
+        "evidence": { "type": "string" },
+        "note": { "type": "string" }
+      }
+    }
+  }
+}

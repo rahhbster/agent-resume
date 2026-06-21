@@ -1,0 +1,43 @@
+{
+  "schema_version": "1.0.0",
+  "job_id": "223e4567-e89b-12d3-a456-426614174001",
+  "external_id": "GH-4821",
+  "title": "Senior Analytics Engineer",
+  "department": "Data",
+  "employment_type": "Full-time",
+  "date_posted": "2026-06-10T00:00:00Z",
+  "description": "Own the analytics engineering stack and the metrics layer.",
+  "application_url": "https://acme.example.com/jobs/4821",
+  "company": {
+    "name": "Acme Corp",
+    "industry": "SaaS",
+    "location": { "city": "Austin", "state": "TX", "country": "US" }
+  },
+  "work_location": { "city": "Austin", "state": "TX", "country": "US" },
+  "remote_option": "Hybrid",
+  "salary": { "currency": "USD", "minimum": 150000, "maximum": 190000, "period": "Annual" },
+  "benefits": ["Health", "401k match", "Equity"],
+  "experience_level": "Senior",
+  "years_of_experience": 5,
+  "sponsorship_available": false,
+  "responsibilities": [
+    { "description": "Design and maintain the dbt project and metrics layer", "category": "Engineering" },
+    { "description": "Partner with product teams on experimentation", "category": "Analytics" }
+  ],
+  "qualifications": [
+    { "requirement_type": "Experience", "level": "Knock-Out", "description": "Authorized to work in the US without sponsorship" },
+    { "requirement_type": "Skill", "name": "SQL", "level": "Required", "years_experience": 5 },
+    { "requirement_type": "Skill", "name": "dbt", "level": "Required", "years_experience": 2 },
+    { "requirement_type": "Education", "level": "Preferred", "degree": "Bachelor's in a quantitative field" }
+  ],
+  "skills": [
+    { "skill": "SQL", "normalized_skill": "sql", "level": "Required", "years_experience": 5 },
+    { "skill": "dbt", "normalized_skill": "dbt", "level": "Required", "years_experience": 2 },
+    { "skill": "Python", "normalized_skill": "python", "level": "Preferred" }
+  ],
+  "education": [{ "degree": "Bachelor's", "field": "Statistics, CS, or related", "level": "Preferred" }],
+  "tags": ["data", "remote-friendly"],
+  "summary": "Senior analytics engineering role on a fast-growing data team.",
+  "created_at": "2026-06-10T00:00:00Z",
+  "updated_at": "2026-06-10T00:00:00Z"
+}
