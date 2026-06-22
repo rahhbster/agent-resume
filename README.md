@@ -196,6 +196,12 @@ This is meant to be a community standard — proposals, new adapters, and additi
 
 The people who build the standard are credited in **[CONTRIBUTORS.md](./CONTRIBUTORS.md)** — significant contributors are added as their work is merged.
 
+## 👤 Maintainer
+
+Created and maintained by **Robert Merrill** ([@rahhbster](https://github.com/rahhbster)) — talent technologist and systems architect, building open infrastructure so people, recruiters, and the agents working on their behalf can share one structured language.
+
+[LinkedIn](https://linkedin.com/in/robertmerrill) · [Limitless Talent](https://limitlesstalent.xyz) · [Contributors](./CONTRIBUTORS.md)
+
 ## 📄 License
 
 [MIT](./LICENSE) © agent-resume contributors
