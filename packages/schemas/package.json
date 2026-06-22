@@ -39,6 +39,7 @@
     "test:watch": "vitest",
     "typecheck": "tsc --noEmit",
     "lint": "tsc --noEmit",
+    "check:dialect": "node scripts/check-dialect-migration.mjs",
     "clean": "rm -rf dist"
   },
   "keywords": [
