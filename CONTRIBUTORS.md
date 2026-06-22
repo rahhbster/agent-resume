@@ -24,6 +24,19 @@ policy honored.
 | --- | --- | --- |
 | [@rahhbster](https://github.com/rahhbster) (Robert Merrill) | Creator & Lead Maintainer | Schema design, spec, project direction |
 
+### Robert Merrill — Creator & Lead Maintainer
+
+Talent technologist and systems architect. After 25 years inside hiring at
+scale, I started building open infrastructure so that candidates, recruiters,
+and the agents now working on their behalf can finally share one honest,
+structured language. **agent-resume** is the schema layer of that effort — a
+neutral, versioned standard owned by no single vendor.
+
+I steward the standard with a bias toward small, well-specified, backward-compatible
+changes, and toward keeping the schemas readable by both humans and machines.
+
+[LinkedIn](https://linkedin.com/in/robertmerrill) · [Limitless Talent](https://limitlesstalent.xyz)
+
 ## Core contributors
 
 Core contributors have made sustained, significant contributions — multiple
