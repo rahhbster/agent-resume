@@ -70,6 +70,14 @@ A field is deprecated by adding `"deprecated": true` and a `description` note in
 | **Stable** | Covered by the versioning policy above. v1.0.0 schemas are Stable. |
 | **Experimental** | Namespaced under `x_` or documented as experimental; **MAY** change in a MINOR release. |
 
+### 2.5 JSON Schema dialect
+
+The v1.0.0 schemas are authored against **JSON Schema draft-07**. This is a deliberate, conservative choice: draft-07 has the broadest, most battle-tested validator support across languages (Ajv, `python-jsonschema`, `go-jsonschema`, and others all implement it fully and stably). For a standard whose entire value is interoperability, maximizing the set of tools that can validate it *today* matters more than using the newest dialect.
+
+The project has verified that these schemas migrate to **JSON Schema 2020-12** without changing the validity of any conforming document — the change is mechanical (`$schema` URI, `definitions` → `$defs`, internal `$ref` updates) and behaviour-preserving. Because a dialect change alters a *consumer's tooling requirement* (their validator must support 2020-12) even when it does not alter document validity, the migration will be shipped as a **MAJOR** release, with the draft-07 (`v1`) and 2020-12 schemas **served side-by-side at their respective `$id` URLs** so integrators can move on their own timeline. The recommended path is to fold the dialect move into the next content MAJOR so integrators absorb a single break, not two.
+
+The full, reproducible procedure and current findings are in **[docs/migrating-to-2020-12.md](./docs/migrating-to-2020-12.md)**.
+
 ---
 
 ## 3. CCDM — Candidate Canonical Data Model
