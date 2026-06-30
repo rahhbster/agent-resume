@@ -76,6 +76,25 @@
 
 ---
 
+## 3.5 Launch-gate checklist — deferred until npm v1.0.0 is live
+
+> Durable record of things deliberately **held until launch**, so they don't get
+> done too early. The package being live on npm is the gate for going wide.
+
+**Hard gate (do first):**
+- [ ] Own the `@agent-resume` scope on npmjs.com + add an `NPM_TOKEN` repo secret, then push the `v1.0.0` tag (a `dry_run` workflow_dispatch first) to publish via `.github/workflows/release.yml`. *Until this is done, the `npm install @agent-resume/schemas` CTA on the site/README/maker-comment 404s.*
+
+**Hold until the gate is cleared (do NOT do early):**
+- [ ] **Seed `good first issue`s.** Public good-first-issues signal "open for contributors" and should fire *with* the launch, not against an unpublished package. Candidates: "add a Rust/Ruby binding (use `bindings/go` + `bindings/python` as templates)", "automated schema-drift check across bindings", "more runnable examples". *(Reminder requested 2026-06-30.)*
+- [ ] **Publish the bindings** to PyPI (`agent-resume`) and tag the Go module — alongside the npm release, not before.
+- [ ] Begin the Phase 1 "earn the room" outreach (JSON Resume, awesome-lists, JSON Schema community) and the cornerstone essay — none of this fires until the package installs.
+
+**Non-blocking, can do anytime:**
+- [ ] Create `rahhbster/rahhbster` profile repo with the delivered README + RSS Action.
+- [ ] Upload `site/assets/social-preview.png` in repo Settings → General → Social preview.
+
+---
+
 ## 4. Decision log (plans to move forward with)
 
 | # | Plan | Lane | Phase | Decision | Status |
