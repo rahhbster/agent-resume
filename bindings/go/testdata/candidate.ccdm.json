@@ -1,0 +1,65 @@
+{
+  "schema_version": "1.0.0",
+  "candidate_id": "123e4567-e89b-12d3-a456-426614174000",
+  "full_name": "Jane Smith",
+  "headline": "Senior Data Analyst — analytics platforms & experimentation",
+  "current_title": "Senior Data Analyst",
+  "contact": {
+    "email": "jane@example.com",
+    "phone": "+1-555-0100",
+    "linkedin_url": "https://www.linkedin.com/in/janesmith",
+    "github_url": "https://github.com/janesmith",
+    "portfolio_url": "https://jane.dev"
+  },
+  "location": { "city": "Austin", "state": "TX", "country": "US" },
+  "work_preferences": { "remote": true, "hybrid": true, "onsite": false, "relocation": false, "travel_percentage": 10 },
+  "work_authorization": { "country": "US", "authorized": true, "requires_sponsorship": false, "security_clearance": "None" },
+  "job_search_status": "passively_open",
+  "salary_expectations": { "currency": "USD", "minimum": 150000, "maximum": 185000, "period": "Annual" },
+  "professional_summary": "Analytics leader with 9 years turning messy data into product decisions.",
+  "experience": [
+    {
+      "company": "Acme Corp",
+      "title": "Senior Data Analyst",
+      "start_date": "2020-03",
+      "end_date": null,
+      "current": true,
+      "location": "Austin, TX",
+      "description": "Own the analytics platform and experimentation program.",
+      "achievements": ["Cut dashboard latency 60%", "Scaled A/B testing to 40 teams"]
+    },
+    {
+      "company": "DataWorks",
+      "title": "Data Analyst",
+      "start_date": "2016-06",
+      "end_date": "2020-02",
+      "description": "Built the company's first self-serve reporting layer."
+    }
+  ],
+  "experience_enrichment": {
+    "years_experience_total": 9,
+    "years_management": 0,
+    "skills_years": { "SQL": 9, "Python": 6, "dbt": 4 }
+  },
+  "skills": [
+    { "skill": "SQL", "normalized_skill": "sql", "proficiency": "Expert", "years_experience": 9 },
+    { "skill": "Python", "normalized_skill": "python", "proficiency": "Advanced", "years_experience": 6 },
+    { "skill": "dbt", "normalized_skill": "dbt", "proficiency": "Advanced", "years_experience": 4 }
+  ],
+  "education": [
+    { "institution": "UT Austin", "degree": "BS", "field": "Statistics", "graduation_year": 2014, "gpa": 3.8 }
+  ],
+  "languages": [{ "name": "English", "fluency": "Native" }],
+  "matching_metadata": {
+    "seniority": "Senior",
+    "job_functions": ["Data & Analytics"],
+    "industries": ["SaaS"],
+    "management_level": "Individual Contributor",
+    "leadership_experience": false
+  },
+  "career_progression": { "trajectory": "Steady", "promotions": 1 },
+  "semantic_keywords": ["analytics", "experimentation", "etl", "data modeling"],
+  "tags": ["referral"],
+  "created_at": "2026-06-01T09:00:00Z",
+  "updated_at": "2026-06-15T09:00:00Z"
+}

@@ -1,0 +1,18 @@
+{
+  "schema_version": "1.0.0",
+  "event_id": "423e4567-e89b-12d3-a456-426614174003",
+  "idempotency_key": "recruiter-claw.match.scored.323e4567.1718452800",
+  "event_type": "match.scored",
+  "source": { "system": "recruiter-claw", "environment": "production", "version": "1.0.0" },
+  "occurred_at": "2026-06-15T12:00:05Z",
+  "delivered_at": "2026-06-15T12:00:06Z",
+  "correlation_id": "523e4567-e89b-12d3-a456-426614174004",
+  "actor": { "type": "system", "id": "scorer-service" },
+  "entity": { "type": "match", "id": "323e4567-e89b-12d3-a456-426614174002" },
+  "payload": {
+    "match_id": "323e4567-e89b-12d3-a456-426614174002",
+    "job_id": "223e4567-e89b-12d3-a456-426614174001",
+    "candidate_id": "123e4567-e89b-12d3-a456-426614174000"
+  },
+  "metadata": { "request_id": "req_abc123", "pipeline": "nightly-rescore" }
+}

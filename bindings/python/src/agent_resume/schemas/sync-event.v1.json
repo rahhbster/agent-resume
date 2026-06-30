@@ -1,0 +1,88 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://agent-resume.dev/schemas/sync-event/v1.0.0/schema.json",
+  "title": "Sync Event Envelope",
+  "description": "Canonical event envelope for bidirectional data sync between agentic-job-board and recruiter-claw. The payload field is typed as a plain object; consumers validate against the appropriate sub-schema after routing on event_type.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "event_id",
+    "idempotency_key",
+    "event_type",
+    "source",
+    "occurred_at",
+    "entity",
+    "payload"
+  ],
+  "properties": {
+    "schema_version": { "type": "string", "const": "1.0.0" },
+    "event_id": { "type": "string", "format": "uuid" },
+    "idempotency_key": { "type": "string", "minLength": 1, "maxLength": 128 },
+    "event_type": {
+      "type": "string",
+      "enum": [
+        "candidate.created",
+        "candidate.updated",
+        "candidate.deleted",
+        "candidate.status_changed",
+        "job.posted",
+        "job.updated",
+        "job.closed",
+        "job.expired",
+        "application.submitted",
+        "application.status_changed",
+        "application.withdrawn",
+        "match.scored",
+        "match.invalidated",
+        "evaluation.requested",
+        "evaluation.completed",
+        "evaluation.failed",
+        "scrape.job_parsed",
+        "scrape.resume_parsed"
+      ]
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["system", "environment"],
+      "properties": {
+        "system": { "type": "string", "enum": ["agentic-job-board", "recruiter-claw"] },
+        "environment": { "type": "string", "enum": ["production", "staging", "development", "test"] },
+        "version": { "type": "string" }
+      }
+    },
+    "occurred_at": { "type": "string", "format": "date-time" },
+    "delivered_at": { "type": "string", "format": "date-time" },
+    "correlation_id": { "type": "string", "format": "uuid" },
+    "actor": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "type": { "type": "string", "enum": ["user", "system", "agent", "webhook"] },
+        "id": { "type": "string" }
+      }
+    },
+    "entity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "id"],
+      "properties": {
+        "type": { "type": "string", "enum": ["candidate", "job", "application", "match", "evaluation", "scrape"] },
+        "id": { "type": "string", "format": "uuid" },
+        "external_id": { "type": "string" }
+      }
+    },
+    "payload": {
+      "type": "object",
+      "description": "Event-specific data discriminated by event_type. Validate the payload contents against the appropriate sub-schema after routing."
+    },
+    "previous_state": {
+      "type": ["object", "null"]
+    },
+    "metadata": {
+      "type": "object",
+      "additionalProperties": { "type": "string" }
+    }
+  }
+}
