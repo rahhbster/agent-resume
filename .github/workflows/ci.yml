@@ -39,3 +39,6 @@ jobs:
 
       - name: Test
         run: pnpm test
+
+      - name: Verify draft-07 → 2020-12 migration still holds
+        run: pnpm --filter @agent-resume/schemas check:dialect

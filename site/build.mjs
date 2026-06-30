@@ -45,6 +45,7 @@ async function writeFile(rel, content) {
 function rewriteLinks(markdown) {
   const repo = "https://github.com/rahhbster/agent-resume/blob/main";
   return markdown
+    .replace(/\]\(\.\.\/SPEC\.md([^)]*)\)/g, "](/spec/$1)")
     .replace(/\]\(\.\/SPEC\.md([^)]*)\)/g, "](/spec/$1)")
     .replace(/\]\(SPEC\.md([^)]*)\)/g, "](/spec/$1)")
     .replace(/\]\(\.\/README\.md([^)]*)\)/g, "](/docs/$1)")
@@ -52,6 +53,7 @@ function rewriteLinks(markdown) {
     .replace(/\]\(\.\/CONTRIBUTING\.md\)/g, `](${repo}/CONTRIBUTING.md)`)
     .replace(/\]\(\.\/LICENSE\)/g, `](${repo}/LICENSE)`)
     .replace(/\]\(\.\/examples([^)]*)\)/g, `](${repo}/examples$1)`)
+    .replace(/\]\(\.\.\/packages([^)]*)\)/g, `](${repo}/packages$1)`)
     .replace(/\]\(\.\/packages([^)]*)\)/g, `](${repo}/packages$1)`)
     .replace(/\]\(packages([^)]*)\)/g, `](${repo}/packages$1)`);
 }
@@ -81,7 +83,7 @@ function page(title, bodyHtml, { back } = {}) {
   </main>
   <footer class="footer"><div class="wrap footer-inner">
     <span>MIT © agent-resume contributors</span>
-    <nav><a href="/spec/">Spec</a><a href="/docs/">Docs</a><a href="/contributors/">Contributors</a><a href="https://github.com/rahhbster/agent-resume">GitHub</a></nav>
+    <nav><a href="/spec/">Spec</a><a href="/docs/">Docs</a><a href="/migration/">Migration</a><a href="/faq/">FAQ</a><a href="/contributors/">Contributors</a><a href="https://github.com/rahhbster/agent-resume">GitHub</a></nav>
   </div></footer>
 </body>
 </html>`;
@@ -126,14 +128,18 @@ async function main() {
   const readme = rewriteLinks(stripCenterHeader(await readFile("README.md")));
   const spec = rewriteLinks(await readFile("SPEC.md"));
   const contributors = rewriteLinks(stripCenterHeader(await readFile("CONTRIBUTORS.md")));
+  const migration = rewriteLinks(await readFile("docs/migrating-to-2020-12.md"));
+  const faq = rewriteLinks(await readFile("docs/faq.md"));
   await writeFile("docs/index.html", page("Docs", md.render(readme), { back: "/" }));
   await writeFile("spec/index.html", page("Specification", md.render(spec), { back: "/" }));
   await writeFile("contributors/index.html", page("Contributors", md.render(contributors), { back: "/" }));
+  await writeFile("migration/index.html", page("draft-07 → 2020-12 migration", md.render(migration), { back: "/spec/" }));
+  await writeFile("faq/index.html", page("FAQ", md.render(faq), { back: "/" }));
 
   // 4. Custom domain + crawler niceties
   await writeFile("CNAME", `${DOMAIN}\n`);
   await writeFile("robots.txt", `User-agent: *\nAllow: /\nSitemap: https://${DOMAIN}/sitemap.xml\n`);
-  const urls = ["", "spec/", "docs/", "contributors/", "schemas/", ...served.map((s) => s.rel)];
+  const urls = ["", "spec/", "docs/", "migration/", "faq/", "contributors/", "schemas/", ...served.map((s) => s.rel)];
   await writeFile(
     "sitemap.xml",
     `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls
@@ -142,7 +148,7 @@ async function main() {
   );
 
   console.log(`Built site → ${out}`);
-  console.log(`Served ${served.length} schemas, 3 doc pages, landing + schema index.`);
+  console.log(`Served ${served.length} schemas, 5 doc pages, landing + schema index.`);
 }
 
 main().catch((err) => {

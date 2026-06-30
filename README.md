@@ -81,6 +81,26 @@ import { ccdmSchema } from "@agent-resume/schemas";
 import ccdm from "@agent-resume/schemas/schemas/ccdm";
 ```
 
+## 🌐 Language bindings
+
+The schemas are the source of truth; bindings bundle the exact same JSON and mirror the validators and HMAC sync for behavioural parity (signatures interoperate across languages).
+
+| Language | Location | Validators | HMAC sync |
+| --- | --- | --- | --- |
+| TypeScript / JS | [`packages/schemas`](./packages/schemas) | ✅ | ✅ |
+| Python | [`bindings/python`](./bindings/python) | ✅ (`jsonschema`) | ✅ |
+| Go | [`bindings/go`](./bindings/go) | ✅ (`santhosh-tekuri/jsonschema`) | ✅ |
+
+```python
+from agent_resume import validate_ccdm, sign_payload, verify_payload
+candidate = validate_ccdm(parsed_resume)
+```
+
+```go
+import ar "github.com/rahhbster/agent-resume/bindings/go"
+err := ar.ValidateCCDM(parsedResume)
+```
+
 ## 📐 The four schemas
 
 | Schema | What it models | Canonical `$id` |
@@ -168,12 +188,16 @@ agent-resume/
 ├── packages/
 │   └── schemas/                 # @agent-resume/schemas (the published package)
 │       ├── src/
-│       │   ├── schemas/         # the 4 canonical JSON Schemas (draft-07)
+│       │   ├── schemas/         # the 4 canonical JSON Schemas (draft-07) — source of truth
 │       │   ├── types/           # mirror TypeScript types
 │       │   ├── adapters/        # ccdmToJsonResume()
 │       │   ├── sync/            # HMAC signer / verifier
 │       │   └── validate.ts      # Ajv validators
 │       └── tests/               # vitest — schema + behavior coverage
+├── bindings/
+│   ├── python/                  # agent-resume (PyPI) — jsonschema validators + HMAC sync
+│   └── go/                      # github.com/rahhbster/agent-resume/bindings/go
+├── docs/                        # FAQ, the draft-07 → 2020-12 migration guide
 ├── SPEC.md                      # the formal specification
 ├── CONTRIBUTING.md
 └── examples/                    # runnable example documents
