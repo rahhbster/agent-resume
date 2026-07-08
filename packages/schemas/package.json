@@ -58,7 +58,9 @@
     "ccdm",
     "jd-cdm",
     "webhook",
-    "hmac"
+    "hmac",
+    "hr-tech",
+    "open-standard"
   ],
   "publishConfig": {
     "access": "public"

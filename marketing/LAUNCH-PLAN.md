@@ -46,10 +46,10 @@
 ## 3. The phased plan
 
 ### Phase 0 — Prep (before any outreach) · ~1 week
-- [ ] Write the **"Why draft-07 / path to 2020-12"** note (SPEC + FAQ). *(Debate C)*
-- [ ] README/site hygiene: first-screen answers (what it is, 4 schemas, "superset of JSON Resume", `$id` URLs, copy-paste validate snippet). GitHub topics: `json-schema`, `hiring`, `ats`, `recruiting`, `jsonresume`, `hr-tech`, `open-standard`. npm keywords.
-- [ ] Stand up a project **RSS feed** + `/blog` (on-ethos; no-algorithm subscribe path).
-- [ ] Draft the **cornerstone essay** + reusable asset kit (pitch, elevator, blurbs — see §5).
+- [x] Write the **"Why draft-07 / path to 2020-12"** note (SPEC + FAQ). *(Debate C)* — `docs/faq.md` + `docs/migrating-to-2020-12.md`
+- [ ] README/site hygiene: first-screen answers — README + site look good; **GitHub topics still need to be set** via repo Settings → Topics: `json-schema`, `hiring`, `ats`, `recruiting`, `jsonresume`, `hr-tech`, `open-standard`. npm keywords: done (`hr-tech`, `open-standard` added).
+- [x] Stand up a project **RSS feed** + `/blog` — `docs/blog/` with first post; `site/build.mjs` emits `/feed.xml` + `/blog/`; nav + footer updated.
+- [x] Draft the **cornerstone essay** + reusable asset kit — `marketing/cornerstone-essay.md`; blurbs + PH comment already in §5.
 
 ### Phase 1 — Earn the room (relationship-first) · Days 0–30
 - [ ] **JSON Resume:** open a GitHub *Discussion* (a genuine question, not a PR) on `github.com/jsonresume/jsonresume.org`: "Is there interest in an AI-native interop layer that round-trips to resume.json?" Demo lossless `ccdmToJsonResume()`. Join their Discord. *(keystone)*
@@ -91,7 +91,8 @@
 
 **Non-blocking, can do anytime:**
 - [ ] Create `rahhbster/rahhbster` profile repo with the delivered README + RSS Action.
-- [ ] Upload `site/assets/social-preview.png` in repo Settings → General → Social preview.
+- [ ] Upload `site/assets/social-preview.png` in repo Settings → General → Social preview. *(file exists at `site/assets/social-preview.png`)*
+- [ ] Set GitHub repository topics: `json-schema`, `hiring`, `ats`, `recruiting`, `jsonresume`, `hr-tech`, `open-standard` via repo Settings → General → Topics.
 
 ---
 
