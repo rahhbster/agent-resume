@@ -81,8 +81,13 @@
 > Durable record of things deliberately **held until launch**, so they don't get
 > done too early. The package being live on npm is the gate for going wide.
 
-**Hard gate (do first):**
-- [ ] Own the `@agent-resume` scope on npmjs.com + add an `NPM_TOKEN` repo secret, then push the `v1.0.0` tag (a `dry_run` workflow_dispatch first) to publish via `.github/workflows/release.yml`. *Until this is done, the `npm install @agent-resume/schemas` CTA on the site/README/maker-comment 404s.*
+**Hard gate (do first) — publish npm v1.0.0:**
+- [ ] **Claim the `@agent-resume` scope.** `@agent-resume` is not the maintainer's personal npm username, so it's an *organization* scope — claiming it is a **website-only** step, there is no CLI equivalent (`npm org create` does not exist). Go to **[npmjs.com/org/create](https://www.npmjs.com/org/create)**, name the org `agent-resume`, pick the **free** plan (unlimited public packages).
+- [ ] **Authenticate the CLI:** `npm login` (interactive — opens a browser approval or prompts for username/password/OTP), then `npm whoami` to confirm, then `npm org ls agent-resume` to confirm ownership.
+- [ ] **Publish**, either way:
+  - *Manual, right now:* `cd packages/schemas && npm publish --access public --dry-run` to sanity-check, then drop `--dry-run`. Claims the scope and ships v1.0.0 in one step, no token needed.
+  - *Or, via the CI release workflow already built:* generate an **Automation** access token (npmjs.com → avatar → Access Tokens → Generate New Token), add it as the `NPM_TOKEN` repo secret, then push the `v1.0.0` tag (a `dry_run` `workflow_dispatch` first) to trigger `.github/workflows/release.yml`.
+  - *Until either happens, the `npm install @agent-resume/schemas` CTA on the site/README/maker-comment 404s.*
 
 **Hold until the gate is cleared (do NOT do early):**
 - [ ] **Seed `good first issue`s.** Public good-first-issues signal "open for contributors" and should fire *with* the launch, not against an unpublished package. Candidates: "add a Rust/Ruby binding (use `bindings/go` + `bindings/python` as templates)", "automated schema-drift check across bindings", "more runnable examples". *(Reminder requested 2026-06-30.)*
@@ -92,6 +97,50 @@
 **Non-blocking, can do anytime:**
 - [ ] Create `rahhbster/rahhbster` profile repo with the delivered README + RSS Action.
 - [ ] Upload `site/assets/social-preview.png` in repo Settings → General → Social preview.
+
+---
+
+## 3.6 Outreach drafts — ready to post (researched 2026-07)
+
+> These don't strictly require npm to be live (Debate A's "earn the room" outreach
+> is meant to precede the loud launch), but they land stronger with a working
+> `npm install` line. **Recommended order: publish npm v1.0.0 first (fast), then
+> fire these** — same content, a materially better first impression, for maybe
+> 10 extra minutes of wait.
+>
+> **Who posts these:** the maintainer, not the agent. These are peer-community
+> first impressions in the maintainer's voice, on repos outside this session's
+> GitHub scope (`jsonresume/jsonresume.org`, `sourcemeta/awesome-jsonschema`,
+> `burningtree/awesome-json` are not in the `rahhbster/*` allowlist) — and even
+> with access, a human should read these before they go out under their name.
+
+### JSON Resume discussion post
+
+**Where:** a GitHub Discussion on [`jsonresume/jsonresume.org`](https://github.com/jsonresume/jsonresume.org) (their live monorepo — site, registry, schema, CLI).
+
+**Title:** *A schema for the layer after JSON Resume (candidates, jobs, requirement levels, match scores)*
+
+**Body:**
+> Hi — I maintain [agent-resume](https://github.com/rahhbster/agent-resume), an open JSON Schema (MIT) for the machine side of hiring: candidate profiles, job postings, match evaluations, and signed sync events. Posting here because it's built *on top of* JSON Resume, not instead of it, and I'd like the overlap checked by people who know this schema best.
+>
+> JSON Resume nailed the human-facing résumé document. What stayed unstandardized is what happens after: normalized skills, job requirement tiers (knock-out / required / preferred / optional), and a match object that means the same thing across an ATS, a job board, and now an LLM agent. That's the gap agent-resume tries to fill — CCDM (candidate) is a strict superset of the JSON Resume schema, and the package ships a real adapter both ways:
+>
+> ```ts
+> import { ccdmToJsonResume } from "@agent-resume/schemas";
+> const resume = ccdmToJsonResume(candidate); // -> valid JSON Resume v1 document
+> ```
+>
+> Repo, spec, and schemas: https://github.com/rahhbster/agent-resume (SPEC.md has the full CCDM/JD-CDM/MatchObject/SyncEvent breakdown).
+>
+> Genuinely want this picked apart — especially anywhere CCDM's superset claim is wrong, or fields that should map back to JSON Resume and currently don't. Not trying to fork or replace anything here.
+
+*(Add the `npm install @agent-resume/schemas` line once published — reads stronger than a caveat about it not being live yet.)*
+
+### Awesome-list targets (verified live + maintained, not guessed)
+
+1. **[sourcemeta/awesome-jsonschema](https://github.com/sourcemeta/awesome-jsonschema)** — active, maintained by Sourcemeta (a real JSON Schema tooling company). Best fit: exactly the Debate C "why draft-07" audience. PR to `data.yaml` (README is auto-generated from it).
+2. **[burningtree/awesome-json](https://github.com/burningtree/awesome-json)** — broader JSON tooling audience, currently-listed and active.
+3. **Skip a forced "awesome-hr-tech" PR.** Checked — the closest matches (`Awesome-Talent-Sourcing`, `awesome-recruitment`) are thin personal lists of Chrome extensions for recruiters, not engineers building ATS/schema tooling. Wrong audience, would read as padding. **Better third move:** a PR to [jsonresume.org/projects](https://jsonresume.org/projects) (via `jsonresume/jsonresume.org`) listing agent-resume as an ecosystem project — durable and discoverable, same repo as the discussion post above.
 
 ---
 
