@@ -67,13 +67,13 @@
     "node": ">=20"
   },
   "devDependencies": {
-    "@types/node": "^22.0.0",
-    "tsup": "^8.0.0",
-    "typescript": "^5.4.0",
-    "vitest": "^1.6.0"
+    "@types/node": "^22.20.5",
+    "tsup": "^8.5.1",
+    "typescript": "^5.9.3",
+    "vitest": "^1.6.1"
   },
   "dependencies": {
-    "ajv": "^8.16.0",
+    "ajv": "^8.20.0",
     "ajv-formats": "^3.0.1"
   }
 }
